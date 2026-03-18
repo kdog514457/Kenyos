@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KENYOS — Premium Interior Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── FOUNDATIONS ─── */
+:root{
+  --white:#ffffff;
+  
+  --border:#e5e5e5;
+  --mid:#888;
+  --dark:#111111;
+  --gold:#9a7c3f;
+  --gold-lt:#c9a85c;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{background:#fff;color:var(--dark);font-family:"Jost",Helvetica,sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;cursor:none}
+img{display:block;max-width:100%}
+button{cursor:none;border:none;background:none;font-family:inherit}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-track{background:var(--white)}
+::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* ─── CURSOR ─── */
+#dot{
+  position:fixed;width:8px;height:8px;
+  background:var(--dark);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .25s var(--ease),height .25s var(--ease),background .25s;
+  will-change:left,top;
+}
+#ring{
+  position:fixed;width:38px;height:38px;
+  border:1px solid rgba(17,17,17,.18);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  will-change:left,top;
+}
+#dot.lgt{background:#fff}
+#ring.lgt{border-color:rgba(255,255,255,.25)}
+body:not(:hover) #dot,body:not(:hover) #ring{opacity:0}
+
+/* ─── TYPE ─── */
+.serif{font-family:"Cormorant Garamond",Georgia,serif}
+.overline-text{
+  font-family:"Jost",sans-serif;
+  font-size:.68rem;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);
+}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;line-height:1.04;letter-spacing:-.01em}
+.display{font-size:clamp(3.2rem,6vw,7rem)}
+.headline{font-size:clamp(2.4rem,4vw,5rem)}
+.subhead{font-size:clamp(1.6rem,2.5vw,3rem)}
+p.lead{font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.75;color:var(--mid);font-weight:300}
+p.body{font-size:.95rem;line-height:1.85;color:var(--mid);font-weight:300}
+
+/* ─── BUTTONS ─── */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:"Jost",sans-serif;
+  font-size:.72rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;
+  padding:15px 38px;position:relative;overflow:hidden;
+  cursor:none;transition:color .4s var(--ease);
+  border:1px solid;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;
+  transform:translateX(-101%);
+  transition:transform .55s var(--ease);
+}
+.btn span{position:relative;z-index:1}
+.btn-dark{color:var(--white);border-color:var(--dark);background:var(--dark)}
+.btn-dark::before{background:var(--gold)}
+.btn-dark:hover::before{transform:translateX(0)}
+.btn-dark:hover{color:var(--white)}
+.btn-outline{color:var(--dark);border-color:var(--dark)}
+.btn-outline::before{background:var(--dark)}
+.btn-outline:hover{color:var(--white)}
+.btn-outline:hover::before{transform:translateX(0)}
+.btn-gold{color:var(--white);border-color:var(--gold);background:var(--gold)}
+.btn-gold::before{background:var(--dark)}
+.btn-gold:hover{color:var(--white)}
+.btn-gold:hover::before{transform:translateX(0)}
+.btn-ghost-w{color:var(--white);border-color:rgba(255,255,255,.4)}
+.btn-ghost-w::before{background:var(--white)}
+.btn-ghost-w:hover{color:var(--dark)}
+.btn-ghost-w:hover::before{transform:translateX(0)}
+.btn-arrow::after{content:"→";font-size:1rem;transition:transform .3s}
+.btn:hover.btn-arrow::after{transform:translateX(5px)}
+
+/* ─── SCROLL REVEAL (no glitch) ─── */
+/* Elements start hidden, become visible once. Never reset after shown. */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+}
+[data-reveal="left"]{transform:translateX(-50px)}
+[data-reveal="right"]{transform:translateX(50px)}
+[data-reveal="scale"]{transform:scale(.96) translateY(16px)}
+[data-reveal].visible{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.1s}
+[data-delay="2"]{transition-delay:.22s}
+[data-delay="3"]{transition-delay:.36s}
+[data-delay="4"]{transition-delay:.52s}
+
+/* ─── NAV ─── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:800;
+  height:68px;padding:0 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .5s,backdrop-filter .5s,box-shadow .5s;
+}
+.nav.solid{
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  box-shadow:0 1px 0 var(--border);
+}
+.nav.dark-mode .nav-logo{color:var(--white)}
+.nav.dark-mode .nav-links a{color:rgba(255,255,255,.8)}
+.nav.dark-mode .nav-cta{color:var(--white);border-color:rgba(255,255,255,.35)}
+.nav.dark-mode .hamburger span{background:var(--white)}
+.nav-logo{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.6rem;font-weight:500;letter-spacing:.2em;
+  color:var(--dark);cursor:none;
+  transition:color .35s;
+  flex-shrink:0;
+}
+.nav-logo small{
+  display:block;font-family:"Jost",sans-serif;
+  font-size:.45rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--mid);font-weight:400;margin-top:2px;
+  transition:color .35s;
+}
+.nav.dark-mode .nav-logo small{color:rgba(255,255,255,.4)}
+.nav-links{
+  display:flex;align-items:center;gap:36px;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-links a{
+  font-size:.68rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dark);cursor:none;position:relative;
+  transition:color .3s,opacity .3s;
+}
+.nav-links a::after{
+  content:"";position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width .35s var(--ease);
+}
+.nav-links a:hover::after{width:100%}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{
+  font-size:.65rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dark);border:1px solid var(--dark);
+  padding:9px 22px;cursor:none;
+  position:relative;overflow:hidden;transition:color .4s;
+  flex-shrink:0;
+}
+.nav-cta::before{
+  content:"";position:absolute;inset:0;
+  background:var(--gold);transform:translateY(101%);
+  transition:transform .45s var(--ease);
+}
+.nav-cta:hover{color:var(--white);border-color:var(--gold)}
+.nav-cta:hover::before{transform:translateY(0)}
+.nav-cta span{position:relative;z-index:1}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px}
+.hamburger span{display:block;width:22px;height:1px;background:var(--dark);transition:all .3s}
+.nav.dark-mode .hamburger span{background:var(--white)}
+
+/* Mobile menu */
+.mobile-menu{
+  position:fixed;inset:0;z-index:799;
+  background:#fff;
+  display:flex;flex-direction:column;
+  padding:96px 44px 44px;
+  transform:translateX(100%);
+  transition:transform .6s var(--ease);
+}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu ul{list-style:none}
+.mobile-menu li{border-bottom:1px solid var(--border)}
+.mobile-menu a{
+  display:block;
+  font-family:"Cormorant Garamond",serif;
+  font-size:2.8rem;font-weight:400;
+  color:var(--dark);padding:18px 0;
+  cursor:none;transition:color .25s;
+}
+.mobile-menu a:hover{color:var(--gold)}
+.menu-close{
+  position:absolute;top:24px;right:44px;
+  font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mid);cursor:none;
+}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1240px;margin:0 auto;padding:0 52px}
+.section{padding:120px 0}
+.section-lg{padding:160px 0}
+.section-sm{padding:80px 0}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;height:100svh;min-height:680px;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{
+  width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  transform:scale(1.0);
+  transition:transform 12s linear;
+  will-change:transform;
+}
+.hero-bg img.loaded{transform:scale(1.06)}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,.25) 0%,
+    rgba(0,0,0,.35) 50%,
+    rgba(0,0,0,.6) 100%
+  );
+}
+.hero-content{
+  position:relative;z-index:1;
+  max-width:860px;padding:0 32px;
+}
+.hero-eyebrow{
+  font-family:"Jost",sans-serif;
+  font-size:.68rem;font-weight:400;letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);
+  margin-bottom:28px;
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  opacity:0;animation:fadeup .9s .2s forwards;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{
+  content:"";display:block;width:32px;height:1px;background:var(--gold-lt);
+}
+.hero-h{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(3.8rem,7vw,8rem);
+  font-weight:400;line-height:.96;letter-spacing:-.02em;
+  color:var(--white);margin-bottom:28px;
+  opacity:0;animation:fadeup .95s .35s forwards;
+}
+.hero-h em{font-style:italic;color:var(--gold-lt)}
+.hero-sub{
+  font-size:clamp(1rem,1.3vw,1.15rem);
+  font-weight:300;color:rgba(255,255,255,.58);
+  max-width:520px;margin:0 auto 44px;line-height:1.75;
+  opacity:0;animation:fadeup .95s .5s forwards;
+}
+.hero-btns{
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:fadeup .95s .65s forwards;
+}
+.hero-scroll{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeup 1s .9s forwards;
+}
+.scroll-label{
+  font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.38);font-family:"Jost",sans-serif;
+}
+.scroll-line{width:1px;height:44px;background:rgba(255,255,255,.18);position:relative;overflow:hidden}
+.scroll-line::after{
+  content:"";position:absolute;
+  top:-44px;width:1px;height:44px;background:var(--gold-lt);
+  animation:scrollpulse 1.8s ease-in-out infinite;
+}
+@keyframes scrollpulse{0%{top:-44px}100%{top:44px}}
+@keyframes fadeup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── MARQUEE ─── */
+.marquee{background:var(--dark);padding:20px 0;overflow:hidden}
+.marquee-track{
+  display:flex;gap:48px;
+  animation:mq 34s linear infinite;white-space:nowrap;
+}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-item{
+  display:inline-flex;align-items:center;gap:24px;
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.38);flex-shrink:0;
+}
+.mq-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.mq-item strong{color:rgba(255,255,255,.78);font-weight:500}
+
+/* ─── INTRO STATEMENT ─── */
+.intro-statement{
+  background:#fff;
+  padding:110px 52px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.intro-statement h2{
+  font-size:clamp(2.2rem,4.5vw,5.5rem);
+  max-width:900px;margin:16px auto 24px;
+  color:var(--dark);
+}
+.intro-statement h2 em{font-style:italic;color:var(--gold)}
+
+/* ─── COLLECTION SHOWCASE ─── */
+/* Full screen alternating panels - THE luxury way */
+.collection-panel{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:560px;
+  background:var(--white);
+}
+.collection-panel.flip{direction:rtl}
+.collection-panel.flip > *{direction:ltr}
+.col-panel-img{
+  position:relative;
+  overflow:hidden;
+  padding:28px;
+  background:var(--white);
+  display:flex;
+  align-items:stretch;
+}
+.col-panel-img-inner{
+  position:relative;overflow:hidden;
+  width:100%;height:100%;
+  flex:1;
+  box-shadow:0 8px 40px rgba(0,0,0,.12);
+  min-height:0;
+}
+.col-panel-img img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+  transition:transform 8s ease;
+  will-change:transform;
+}
+.collection-panel:hover .col-panel-img img{transform:scale(1.04)}
+.col-panel-txt{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:48px 56px;
+  background:#fff;
+  position:relative;
+}
+.col-panel-num{
+  position:absolute;right:32px;bottom:16px;
+  font-family:"Cormorant Garamond",serif;
+  font-size:6rem;font-weight:300;
+  color:rgba(0,0,0,.04);line-height:1;
+  pointer-events:none;
+  user-select:none;
+}
+.collection-panel.flip .col-panel-num{right:auto;left:40px}
+.col-panel-txt h3{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(1.6rem,2.2vw,2.6rem);
+  font-weight:400;color:var(--dark);
+  margin:8px 0 12px;line-height:1.06;
+}
+.col-panel-txt h3 em{font-style:italic;color:var(--gold)}
+.col-panel-txt p{
+  font-size:.88rem;line-height:1.7;color:var(--mid);
+  max-width:400px;margin-bottom:14px;
+}
+.col-features{list-style:none;margin-bottom:20px}
+.col-features li{
+  font-size:.81rem;color:var(--dark);
+  padding:7px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:11px;
+}
+.col-features li::before{
+  content:"";width:5px;height:1px;background:var(--gold);
+  display:block;flex-shrink:0;
+}
+.col-divider{height:1px;background:var(--border)}
+
+/* ─── EMPOLO FULL BLEED ─── */
+.empolo-hero{
+  position:relative;
+  height:90vh;min-height:600px;overflow:hidden;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:10%;text-align:center;
+}
+.empolo-hero-bg{position:absolute;inset:0}
+.empolo-hero-bg img{width:100%;height:100%;object-fit:cover}
+.empolo-hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.1) 60%,transparent 100%);
+}
+.empolo-hero-content{position:relative;z-index:1;max-width:700px;padding:0 32px}
+
+/* Empolo gallery strip */
+.empolo-gallery{
+  background:var(--dark);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:340px 340px;
+  gap:2px;
+}
+.empolo-gallery.flip-cols{grid-template-columns:1fr 1fr}
+.eg-cell{position:relative;overflow:hidden;min-height:460px;cursor:none}
+.eg-cell img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .7s var(--ease);
+  will-change:transform;
+}
+.eg-cell:hover img{transform:scale(1.05)}
+.eg-cell-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:40px 28px 24px;
+  background:linear-gradient(to top,rgba(0,0,0,.7),transparent);
+}
+.eg-cell-label .overline-text{color:rgba(255,255,255,.55);margin-bottom:6px;display:block}
+.eg-cell-label p{font-size:1.1rem;color:var(--white);font-family:"Cormorant Garamond",serif;font-weight:400;line-height:1.2}
+
+
+/* Wood product cards */
+.wood-prod-card:hover{box-shadow:0 12px 36px rgba(0,0,0,.09)}
+.wood-prod-card:hover .wood-prod-img{transform:scale(1.05)}
+@media(max-width:1100px){
+  #wood-products .grid-5{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:680px){
+  #wood-products [style*="repeat(5"]{grid-template-columns:repeat(2,1fr) !important}
+}
+
+/* ─── BRAND PARTNERS ─── */
+.brand-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.brand-card{
+  background:#fff;padding:56px 48px 60px;
+  position:relative;overflow:hidden;cursor:none;
+  transition:background .35s;
+}
+.brand-card:hover{background:#fff}
+.brand-card::after{
+  content:"";position:absolute;
+  bottom:0;left:0;right:0;height:2px;
+  background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s var(--ease);
+}
+.brand-card:hover::after{transform:scaleX(1)}
+.brand-card-name{
+  font-family:"Cormorant Garamond",serif;
+  font-size:2.6rem;font-weight:400;letter-spacing:.06em;
+  color:var(--dark);line-height:1;margin-bottom:10px;
+}
+.brand-card-tag{
+  display:inline-block;
+  font-family:"Jost",sans-serif;
+  font-size:.58rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(154,124,63,.3);
+  padding:4px 12px;margin-bottom:24px;
+}
+.brand-card-sep{height:1px;background:var(--border);margin-bottom:22px}
+.brand-card-desc{font-size:.88rem;line-height:1.8;color:var(--mid);margin-bottom:24px}
+.brand-card-list{list-style:none;margin-bottom:30px}
+.brand-card-list li{
+  font-size:.82rem;color:var(--dark);
+  padding:9px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.brand-card-list li::before{content:"—";color:var(--gold);font-size:.7rem;flex-shrink:0}
+.brand-bg-accent{
+  position:absolute;top:-40px;right:-40px;
+  width:180px;height:180px;border-radius:50%;
+  border:1px solid rgba(154,124,63,.06);
+  pointer-events:none;
+}
+
+/* ─── SHOWROOM SECTION ─── */
+.showroom-split{
+  display:grid;grid-template-columns:1fr 1.1fr;
+  min-height:700px;
+  background:var(--dark);
+}
+.showroom-txt{
+  padding:80px 80px 80px 52px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.showroom-txt h2{color:var(--white)}
+.showroom-txt h2 em{font-style:italic;color:var(--gold-lt)}
+.showroom-txt p{color:rgba(255,255,255,.5);margin:20px 0 36px;max-width:420px}
+.showroom-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px}
+.s-tag{
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.1);
+  padding:7px 14px;transition:all .3s;cursor:none;
+}
+.s-tag:hover{border-color:var(--gold-lt);color:var(--gold-lt)}
+.showroom-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:2px;
+}
+.sg{position:relative;overflow:hidden;cursor:none}
+.sg img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.sg:hover img{transform:scale(1.05)}
+.sg-ov{position:absolute;inset:0;background:rgba(0,0,0,.12)}
+.sg-lb{
+  position:absolute;bottom:14px;left:16px;
+  font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);font-family:"Jost",sans-serif;
+}
+.sg-badge{
+  position:absolute;top:14px;right:14px;
+  font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-lt);border:1px solid rgba(201,168,92,.35);
+  padding:3px 8px;font-family:"Jost",sans-serif;
+}
+.sg-line{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,var(--gold),transparent);opacity:.3}
+
+/* ─── WHY KENYOS — 3 pillars only ─── */
+.pillars{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+}
+.pillar{
+  background:#fff;
+  padding:60px 48px;
+  cursor:none;transition:background .35s,box-shadow .35s;
+}
+.pillar:hover{background:#fff}
+.pillar-icon{
+  width:48px;height:48px;
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;position:relative;
+}
+.pillar-icon::before{
+  content:"";position:absolute;inset:5px;
+  background:rgba(154,124,63,.06);
+  transition:background .35s;
+}
+.pillar:hover .pillar-icon::before{background:rgba(154,124,63,.14)}
+.pillar-icon svg{width:18px;height:18px;stroke:var(--gold);stroke-width:1.2;fill:none;position:relative;z-index:1}
+.pillar-num{
+  font-family:"Cormorant Garamond",serif;
+  font-size:5rem;font-weight:300;
+  color:rgba(0,0,0,.04);
+  position:absolute;top:16px;right:24px;
+  line-height:1;transition:color .35s;
+}
+.pillar:hover .pillar-num{color:rgba(154,124,63,.08)}
+.pillar-title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.55rem;font-weight:400;
+  color:var(--dark);margin-bottom:12px;
+}
+.pillar-desc{font-size:.85rem;line-height:1.8;color:var(--mid)}
+
+/* ─── GALLERY (purposeful: only 4 images, each labeled) ─── */
+.gallery-purposeful,.gal4{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:360px 360px;
+  gap:2px;
+  overflow:hidden;
+}
+.gp{position:relative;overflow:hidden;cursor:none;min-height:0;height:100%}
+.gp img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.gp:hover img{transform:scale(1.05)}
+.gp-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:48px 28px 26px;
+  background:linear-gradient(to top,rgba(0,0,0,.62),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.gp:hover .gp-label{opacity:1}
+.gp-label .overline-text{color:rgba(255,255,255,.65);display:block;margin-bottom:5px}
+.gp-label p{font-size:1.1rem;font-family:"Cormorant Garamond",serif;color:var(--white)}
+
+/* ─── CTA SECTION ─── */
+.cta-section{
+  background:var(--dark);
+  position:relative;overflow:hidden;
+  text-align:center;
+  padding:140px 52px;
+}
+.cta-bg-texture{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(154,124,63,.12),transparent 70%);
+  pointer-events:none;
+}
+.cta-section h2{
+  font-size:clamp(3rem,5.5vw,6.5rem);
+  color:var(--white);position:relative;
+  margin:16px 0 22px;
+}
+.cta-section h2 em{font-style:italic;color:var(--gold-lt)}
+.cta-section p{
+  color:rgba(255,255,255,.42);
+  max-width:480px;margin:0 auto 48px;
+  font-size:1.05rem;line-height:1.75;
+}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;position:relative}
+
+/* ─── FOOTER ─── */
+footer{background:#0a0a0a;padding:72px 0 36px}
+.foot-inner{
+  max-width:1240px;margin:0 auto;padding:0 52px;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;
+  padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,.06);
+  margin-bottom:28px;
+}
+.foot-logo{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.7rem;font-weight:500;letter-spacing:.2em;
+  color:var(--white);display:block;
+}
+.foot-logo-sub{
+  font-size:.48rem;letter-spacing:.34em;text-transform:uppercase;
+  color:rgba(255,255,255,.28);display:block;margin-top:3px;
+}
+.foot-tagline{font-size:.85rem;line-height:1.78;color:rgba(255,255,255,.28);margin-top:22px;max-width:240px}
+.foot-social{display:flex;gap:10px;margin-top:26px}
+.soc{
+  width:34px;height:34px;border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:rgba(255,255,255,.36);
+  text-decoration:none;transition:all .28s;cursor:none;
+}
+.soc:hover{border-color:var(--gold);color:var(--gold)}
+.foot-col h4{
+  font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);font-family:"Jost",sans-serif;font-weight:500;
+  margin-bottom:20px;
+}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:9px}
+.foot-col a{
+  font-size:.82rem;color:rgba(255,255,255,.28);
+  cursor:none;transition:color .25s;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.foot-col a:hover{color:var(--gold)}
+.foot-col a::before{content:"—";font-size:.55rem;opacity:.4}
+.foot-ct{font-size:.82rem;color:rgba(255,255,255,.28);line-height:2}
+.foot-ct strong{color:rgba(255,255,255,.5);font-weight:400;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;display:block;margin-top:14px}
+.foot-bottom{
+  max-width:1240px;margin:0 auto;padding:0 52px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.foot-copy{font-size:.68rem;color:rgba(255,255,255,.18);letter-spacing:.09em}
+.foot-gold-line{width:50px;height:1px;background:var(--gold);opacity:.35}
+
+/* ─── SUB-PAGE HEADER ─── */
+.ph{
+  height:60vh;min-height:480px;
+  position:relative;display:flex;
+  flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-bottom:9%;text-align:center;overflow:hidden;
+}
+.ph-bg{position:absolute;inset:0}
+.ph-bg img{width:100%;height:100%;object-fit:cover}
+.ph-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.65))}
+.ph-content{position:relative;z-index:1;padding:0 32px}
+.ph-content h1{
+  font-size:clamp(3rem,6vw,6.5rem);
+  color:var(--white);letter-spacing:-.02em;margin-top:12px;
+}
+.ph-content h1 em{font-style:italic;color:var(--gold-lt)}
+.bc{
+  display:flex;align-items:center;justify-content:center;
+  gap:10px;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);margin-bottom:20px;
+}
+.bc a{color:rgba(255,255,255,.35);cursor:none;transition:color .25s}
+.bc a:hover{color:var(--gold-lt)}.bc span{color:rgba(255,255,255,.18)}
+
+/* ─── ABOUT ─── */
+.about-split{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
+.about-img{overflow:hidden}
+.about-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease}
+.about-img:hover img{transform:scale(1.03)}
+.about-txt{padding:80px 72px;display:flex;flex-direction:column;justify-content:center}
+.about-quote-block{
+  background:var(--dark);padding:80px 72px;position:relative;overflow:hidden;
+}
+.about-quote-block blockquote{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(2rem,3.2vw,3.5rem);
+  font-weight:400;font-style:italic;
+  color:var(--white);line-height:1.28;
+  max-width:780px;
+}
+.about-quote-block cite{
+  display:block;font-style:normal;
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin-top:24px;
+}
+.qmark{
+  font-family:"Cormorant Garamond",serif;
+  font-size:16rem;color:rgba(255,255,255,.025);
+  position:absolute;top:-50px;left:40px;line-height:1;pointer-events:none;
+}
+.vals-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.val{background:#fff;padding:44px 32px;text-align:center;cursor:none;transition:background .3s}
+.val:hover{background:#fff}
+.val-icon{
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+}
+.val-icon::after{content:"";width:12px;height:12px;background:var(--gold);border-radius:50%;opacity:.36}
+.val-title{font-family:"Cormorant Garamond",serif;font-size:1.25rem;color:var(--dark);margin-bottom:9px}
+.val-desc{font-size:.82rem;color:var(--mid);line-height:1.68}
+
+/* ─── BRANDS PAGE ─── */
+.brands-pg-header{background:var(--dark);padding:80px 0;text-align:center}
+.brands-pg-header h2{color:var(--white)}
+.brands-pg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.bpg-card{background:#fff;cursor:none;overflow:hidden}
+.bpg-img{height:260px;overflow:hidden;position:relative}
+.bpg-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.bpg-card:hover .bpg-img img{transform:scale(1.05)}
+.bpg-body{padding:40px 36px 44px}
+.bpg-name{font-family:"Cormorant Garamond",serif;font-size:2.8rem;font-weight:400;color:var(--dark);line-height:1;margin-bottom:6px}
+.bpg-type{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:24px}
+.bpg-d{font-size:.88rem;line-height:1.82;color:var(--mid);margin-bottom:22px}
+.bpg-li{list-style:none;border-top:1px solid var(--border);padding-top:20px}
+.bpg-li li{
+  font-size:.8rem;color:var(--dark);
+  padding:9px 0;border-bottom:1px solid rgba(0,0,0,.05);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.bpg-li li::after{content:"→";color:var(--gold)}
+
+/* ─── SHOWROOM PAGE ─── */
+.show-zones{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.sz{position:relative;min-height:380px;overflow:hidden;cursor:none}
+.sz:first-child{grid-column:span 2}
+.sz img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
+.sz:hover img{transform:scale(1.04)}
+.sz-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.68),transparent 55%)}
+.sz-c{position:absolute;bottom:0;left:0;right:0;padding:28px}
+.sz-lb{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:6px}
+.sz-t{font-family:"Cormorant Garamond",serif;font-size:1.7rem;color:var(--white)}
+.sz-new{
+  position:absolute;top:16px;right:16px;
+  font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold-lt);border:1px solid rgba(201,168,92,.38);
+  padding:4px 9px;font-family:"Jost",sans-serif;
+}
+
+/* ─── PROJECTS ─── */
+.prj-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.prj-i{overflow:hidden;cursor:none;background:#fff;border:1px solid var(--border)}
+.prj-img-wrap{position:relative;overflow:hidden;aspect-ratio:4/3}
+.prj-i:nth-child(2) .prj-img-wrap{aspect-ratio:3/4}
+.prj-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.prj-i:hover .prj-img-wrap img{transform:scale(1.05)}
+.prj-ov{position:absolute;inset:0;background:rgba(0,0,0,.28);opacity:0;transition:opacity .35s;display:flex;align-items:center;justify-content:center}
+.prj-i:hover .prj-ov{opacity:1}
+.prj-view{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);border:1px solid rgba(255,255,255,.5);padding:9px 20px}
+.prj-meta{padding:18px 18px 20px}
+.prj-tp{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px}
+.prj-name{font-family:"Cormorant Garamond",serif;font-size:1.3rem;color:var(--dark)}
+
+/* ─── CONTACT ─── */
+.ct-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.ctd{padding:22px 0;border-bottom:1px solid var(--border)}
+.ctd-l{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.ctd-v{font-size:.9rem;color:var(--dark);line-height:1.65}
+.fg{margin-bottom:20px}
+.fl{display:block;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:7px}
+.fi,.fsel,.fta{
+  width:100%;background:#fff;border:1px solid var(--border);
+  border-radius:0;padding:13px 16px;
+  font-family:"Jost",sans-serif;font-size:.92rem;color:var(--dark);font-weight:300;
+  transition:border-color .3s;appearance:none;-webkit-appearance:none;
+}
+.fi:focus,.fsel:focus,.fta:focus{outline:none;border-color:var(--gold)}
+.fta{resize:vertical;min-height:130px}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .collection-panel,.showroom-split{grid-template-columns:1fr}
+  .collection-panel.flip{direction:ltr}
+  .col-panel-img{min-height:320px}
+  .pillars{grid-template-columns:1fr 1fr}
+  .brand-row{grid-template-columns:1fr}
+  .brands-pg-grid{grid-template-columns:1fr}
+  .about-split{grid-template-columns:1fr}
+  .vals-grid{grid-template-columns:1fr 1fr}
+  .foot-inner{grid-template-columns:1fr 1fr;gap:36px}
+  .empolo-gallery,.empolo-gallery.flip-cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:860px){
+  .nav{padding:0 24px}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .wrap{padding:0 24px}
+  .section{padding:80px 0}.section-lg{padding:110px 0}
+  .col-panel-txt{padding:52px 32px}
+  .showroom-txt{padding:52px 24px}
+  .about-txt{padding:52px 24px}
+  .about-quote-block{padding:60px 32px}
+  .gallery-purposeful{grid-template-columns:1fr;grid-template-rows:none;height:auto}
+  .gp:first-child{grid-row:auto;aspect-ratio:4/3}
+  .gp{aspect-ratio:4/3}
+  .prj-g{grid-template-columns:1fr 1fr}
+  .prj-i:nth-child(2) .prj-img-wrap{aspect-ratio:4/3}
+  .show-zones{grid-template-columns:1fr}.sz:first-child{grid-column:span 1}
+  .ct-wrap{grid-template-columns:1fr}
+  .foot-inner{grid-template-columns:1fr;padding:0 24px 36px}
+  .foot-bottom{flex-direction:column;gap:8px;padding:0 24px}
+  .cta-section{padding:90px 24px}
+  .ph-content h1{font-size:clamp(2.5rem,7vw,4rem)}
+}
+@media(max-width:580px){
+  .pillars{grid-template-columns:1fr}
+  .vals-grid{grid-template-columns:1fr}
+  .prj-g{grid-template-columns:1fr}
+  .gallery-purposeful{grid-template-columns:1fr}
+  .fr2{grid-template-columns:1fr}
+  .intro-statement{padding:72px 24px}
+}
+</style>
+</head>
+<body>
+
+<div id="dot"></div>
+<div id="ring"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mmenu">
+  <button class="menu-close" onclick="closeMM()">Close ✕</button>
+  <ul>
+    <li><a href="#" onclick="navTo('home');closeMM()">Home</a></li>
+    <li><a href="#" onclick="navTo('about');closeMM()">About</a></li>
+    <li><a href="#" onclick="navTo('col');closeMM()">Collections</a></li>
+    <li><a href="#" onclick="navTo('brands');closeMM()">Brands</a></li>
+    <li><a href="#" onclick="navTo('show');closeMM()">Showroom</a></li>
+    <li><a href="#" onclick="navTo('proj');closeMM()">Projects</a></li>
+    <li><a href="#" onclick="navTo('contact');closeMM()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- NAV -->
+<header class="nav dark-mode" id="nav">
+  <a href="#" class="nav-logo" onclick="navTo('home')">
+    KENYOS
+    <small>Interior &amp; Building Solutions</small>
+  </a>
+  <nav class="nav-links">
+    <a href="#" onclick="navTo('home')">Home</a>
+    <a href="#" onclick="navTo('about')">About</a>
+    <a href="#" onclick="navTo('col')">Collections</a>
+    <a href="#" onclick="navTo('brands')">Brands</a>
+    <a href="#" onclick="navTo('show')">Showroom</a>
+    <a href="#" onclick="navTo('proj')">Projects</a>
+    <a href="#" onclick="navTo('contact')">Contact</a>
+  </nav>
+  <a href="#" class="nav-cta" onclick="navTo('contact')"><span>Book Consultation</span></a>
+  <button class="hamburger" onclick="openMM()"><span></span><span></span><span></span></button>
+</header>
+
+
+<div id="pg-home">
+
+<!-- HERO: Sharp real photo, single powerful message -->
+<section class="hero">
+  <div class="hero-bg"><img src="hero_hq.jpg" alt="KENYOS Premium Showroom" id="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Premium Interior &amp; Building Solutions</p>
+    <h1 class="hero-h">Where spaces<br>become <em>extraordinary</em></h1>
+    <p class="hero-sub">KENYOS is a curated destination for premium kitchens, wardrobes, bathroom collections, door systems, and smart electrical solutions — for homes, offices, and commercial spaces.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('col')"><span>Explore Collections</span></a>
+      <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('show')"><span>Visit Showroom</span></a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span class="scroll-label">Discover</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- MARQUEE: brand signals -->
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="mq-item"><span class="mq-dot"></span><strong>Kitchens</strong> — Bespoke environments</div><div class="mq-item"><span class="mq-dot"></span><strong>Wardrobes</strong> — Custom storage</div><div class="mq-item"><span class="mq-dot"></span><strong>Empolo</strong> — German Sanitaryware</div><div class="mq-item"><span class="mq-dot"></span><strong>Hettich</strong> — Premium Hardware</div><div class="mq-item"><span class="mq-dot"></span><strong>CHINT Global</strong> — Smart Electrical</div><div class="mq-item"><span class="mq-dot"></span><strong>Doors</strong> — UPVC & Aluminium</div><div class="mq-item"><span class="mq-dot"></span><strong>Wood Solutions</strong> — Joinery & Timber</div><div class="mq-item"><span class="mq-dot"></span><strong>Bathrooms</strong> — Statement suites</div><div class="mq-item"><span class="mq-dot"></span><strong>Kitchens</strong> — Bespoke environments</div><div class="mq-item"><span class="mq-dot"></span><strong>Wardrobes</strong> — Custom storage</div><div class="mq-item"><span class="mq-dot"></span><strong>Empolo</strong> — German Sanitaryware</div><div class="mq-item"><span class="mq-dot"></span><strong>Hettich</strong> — Premium Hardware</div><div class="mq-item"><span class="mq-dot"></span><strong>CHINT Global</strong> — Smart Electrical</div><div class="mq-item"><span class="mq-dot"></span><strong>Doors</strong> — UPVC & Aluminium</div><div class="mq-item"><span class="mq-dot"></span><strong>Wood Solutions</strong> — Joinery & Timber</div><div class="mq-item"><span class="mq-dot"></span><strong>Bathrooms</strong> — Statement suites</div>
+  </div>
+</div>
+
+<!-- INTRO: Brand positioning, one sentence -->
+<div class="intro-statement">
+  <p class="overline-text" data-reveal>One destination. Every interior need.</p>
+  <h2 data-reveal data-delay="1">KENYOS brings the world's finest<br>interior brands to <em>your space</em></h2>
+  <p class="lead" data-reveal data-delay="2" style="max-width:580px;margin:0 auto 36px">From the first material selection to the final finish — we supply, specify, and support premium interior solutions for every room, every project, and every scale.</p>
+  <a href="#" class="btn btn-dark btn-arrow" onclick="navTo('col')" data-reveal data-delay="3"><span>See all collections</span></a>
+</div>
+
+<!-- PRODUCT COLLECTIONS: Purposeful alternating full-screen panels
+     6 categories, logically grouped, each with purpose -->
+
+<!-- 01 KITCHENS -->
+<div class="collection-panel" data-reveal="left" id="colKitchens">
+  <div class="col-panel-img">
+    <div class="col-panel-img-inner">
+      <img src="cat_kitchen.jpg" alt="Luxury Kitchen" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    </div>
+  </div>
+  <div class="col-panel-txt">
+    <div class="col-panel-num">01</div>
+    <span class="overline-text">Collection 01</span>
+    <h3>Luxury <em>Kitchens</em></h3>
+    <p>Custom kitchen environments designed for the way you truly live — premium cabinetry, island systems, and architectural finishes crafted to exact specification.</p>
+    <ul class="col-features">
+      <li>Full bespoke cabinetry &amp; joinery systems</li>
+      <li>Hettich premium drawer &amp; hinge hardware</li>
+      <li>Handleless, handle, and profile door styles</li>
+      <li>Island, peninsular &amp; open-plan configurations</li>
+      <li>Lacquer, veneer, foil &amp; solid timber finishes</li>
+    </ul>
+    <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('col')"><span>Explore Kitchens</span></a>
+  </div>
+</div>
+<div class="col-divider"></div>
+
+<!-- 02 WARDROBES -->
+<div class="collection-panel flip" data-reveal="right">
+  <div class="col-panel-img">
+    <div class="col-panel-img-inner">
+      <img src="cat_wardrobe.jpg" alt="Fitted Wardrobes" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    </div>
+  </div>
+  <div class="col-panel-txt">
+    <div class="col-panel-num">02</div>
+    <span class="overline-text">Collection 02</span>
+    <h3>Fitted <em>Wardrobes</em></h3>
+    <p>Precision-engineered wardrobe systems that integrate seamlessly into your interior — from walk-in dressing rooms to full-length fitted walls, with Hettich internal fittings throughout.</p>
+    <ul class="col-features">
+      <li>Walk-in dressing room &amp; fitted wardrobe systems</li>
+      <li>Sliding, hinged &amp; bi-fold door configurations</li>
+      <li>Hettich internal organiser &amp; storage fittings</li>
+      <li>Mirror, glass, lacquer &amp; veneer door options</li>
+      <li>Integrated lighting &amp; charging solutions</li>
+    </ul>
+    <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('col')"><span>Explore Wardrobes</span></a>
+  </div>
+</div>
+<div class="col-divider"></div>
+
+<!-- 03 BATHROOM (Empolo) -->
+<div class="collection-panel" data-reveal="left">
+  <div class="col-panel-img">
+    <div class="col-panel-img-inner">
+      <img src="cat_bathroom.jpg" alt="Bathroom Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    </div>
+  </div>
+  <div class="col-panel-txt">
+    <div class="col-panel-num">03</div>
+    <span class="overline-text">Empolo — Collection 03</span>
+    <h3>Bathroom <em>Suites</em></h3>
+    <p>The complete Empolo German sanitaryware collection — a considered world of designer vanities, statement freestanding baths, precision tap systems, and shower enclosures.</p>
+    <ul class="col-features">
+      <li>Freestanding &amp; built-in bath collections</li>
+      <li>Designer vanity units &amp; basin collections</li>
+      <li>Precision tap, mixer &amp; shower systems</li>
+      <li>WC suites, bidets &amp; wall-hung sanitary ware</li>
+      <li>Fully coordinated accessories &amp; mirrors</li>
+    </ul>
+    <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore Empolo</span></a>
+  </div>
+</div>
+<div class="col-divider"></div>
+
+<!-- 04 DOORS (UPVC + Aluminium grouped) -->
+<div class="collection-panel flip" data-reveal="right">
+  <div class="col-panel-img">
+    <div class="col-panel-img-inner">
+      <img src="cat_doors.jpg" alt="Door Systems" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    </div>
+  </div>
+  <div class="col-panel-txt">
+    <div class="col-panel-num">04</div>
+    <span class="overline-text">Collection 04</span>
+    <h3>Doors &amp; <em>Entry Systems</em></h3>
+    <p>Architectural-grade door and entry solutions in both UPVC and aluminium — combining thermal efficiency, acoustic performance, and refined aesthetic for every building type.</p>
+    <ul class="col-features">
+      <li>UPVC doors &amp; window systems</li>
+      <li>Aluminium entrance &amp; patio sliding doors</li>
+      <li>Curtain wall &amp; frameless glazing assemblies</li>
+      <li>Security-rated multi-point locking systems</li>
+      <li>Full RAL colour range &amp; hardware customisation</li>
+    </ul>
+    <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('col')"><span>Explore Doors</span></a>
+  </div>
+</div>
+<div class="col-divider"></div>
+
+<!-- 05 WOOD SOLUTIONS -->
+<div class="collection-panel" data-reveal="left">
+  <div class="col-panel-img">
+    <div class="col-panel-img-inner">
+      <img src="cat_corridor.jpg" alt="Wood Solutions" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    </div>
+  </div>
+  <div class="col-panel-txt">
+    <div class="col-panel-num">05</div>
+    <span class="overline-text">Collection 05</span>
+    <h3>Wood <em>Solutions</em></h3>
+    <p>The premium material foundation of every interior — architectural timber, MDF boards, decorative veneers, CNC-cut components, and precision edge banding for every application.</p>
+    <ul class="col-features">
+      <li>Architectural MDF &amp; timber board supply</li>
+      <li>Decorative veneer &amp; panel solutions</li>
+      <li>CNC precision cutting for custom profiles &amp; shapes</li>
+      <li>Edge banding in high-gloss, matte &amp; wood finishes</li>
+    </ul>
+    <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('wood')"><span>Explore Wood Solutions</span></a>
+  </div>
+</div>
+<div class="col-divider"></div>
+
+
+
+<!-- 06 ELECTRICAL (CHINT) -->
+<div class="collection-panel flip" data-reveal="right">
+  <div class="col-panel-img">
+    <div class="col-panel-img-inner">
+      <img src="real_show7.jpg" alt="CHINT Electrical" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    </div>
+  </div>
+  <div class="col-panel-txt">
+    <div class="col-panel-num">06</div>
+    <span class="overline-text">CHINT Global — Collection 06</span>
+    <h3>Electrical &amp; <em>Smart Solutions</em></h3>
+    <p>The full CHINT Global range — premium electrical finishing products and smart building infrastructure for residential, office, and commercial installations across every scale.</p>
+    <ul class="col-features">
+      <li>Designer switch &amp; socket collections</li>
+      <li>Distribution boards, MCBs &amp; RCDs</li>
+      <li>Smart home &amp; building automation wiring</li>
+      <li>Solar inverters &amp; energy management systems</li>
+    </ul>
+    <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore CHINT</span></a>
+  </div>
+</div>
+
+<!-- EMPOLO HERO: Dedicated full-bleed showcase of star product -->
+<section class="empolo-hero" data-reveal>
+  <div class="empolo-hero-bg"><img src="emp_marble.jpg" alt="Empolo Marble Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+  <div class="empolo-hero-grad"></div>
+  <div class="empolo-hero-content">
+    <span class="overline-text" style="color:rgba(255,255,255,.6)">Empolo — German Fashion Sanitary Ware</span>
+    <h2 class="headline" style="color:var(--white);margin:14px 0 18px;font-style:italic">"Redefine your<br>bathroom ritual."</h2>
+    <p style="color:rgba(255,255,255,.55);margin-bottom:32px;font-size:1rem;line-height:1.75">Experience the Empolo collection in person at our KENYOS showroom — live bathroom environments you can walk through, touch, and imagine in your home.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('show')"><span>Visit Showroom</span></a>
+      <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('brands')"><span>Explore Empolo</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- EMPOLO GALLERY: 3 purposeful images, each showing something different -->
+<div class="empolo-gallery">
+  <div class="eg-cell" data-reveal="left">
+    <img src="emp_class.jpg" alt="Classical Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    <div class="eg-cell-label">
+      <span class="overline-text">Statement Bath</span>
+      <p>Classical Collection — Marble &amp; brushed brass</p>
+    </div>
+  </div>
+  <div class="eg-cell" data-reveal>
+    <img src="emp_vanity.jpg" alt="Vanity Collection" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    <div class="eg-cell-label">
+      <span class="overline-text">Vanity Systems</span>
+      <p>Designer basin &amp; vanity series</p>
+    </div>
+  </div>
+  <div class="eg-cell" data-reveal="right">
+    <img src="bathroom_fishscale.jpg" alt="Designer Series" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    <div class="eg-cell-label">
+      <span class="overline-text">Designer Series</span>
+      <p>Statement tile &amp; fitting combinations</p>
+    </div>
+  </div>
+
+  <div class="eg-cell" data-reveal="right">
+    <img src="showroom_corridor.jpg" alt="Tap &amp; Shower Gallery" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+    <div class="eg-cell-label">
+      <span class="overline-text">Tap &amp; Shower Gallery</span>
+      <p>Precision fixtures — every style, every finish</p>
+    </div>
+  </div>
+</div>
+
+<!-- BRAND PARTNERS: Each card has a reason to exist -->
+<div class="col-divider" style="margin-top:2px"></div>
+<section class="section" style="background:var(--white)">
+  <div class="wrap">
+    <div style="margin-bottom:64px">
+      <span class="overline-text" data-reveal>Our Brand Partners</span>
+      <h2 class="headline" data-reveal data-delay="1" style="margin:14px 0 18px">Global brands.<br><em>Curated</em> for excellence.</h2>
+      <p class="lead" data-reveal data-delay="2" style="max-width:500px">We partner only with brands that match our commitment to precision, quality, and elevated design — bringing their world-class ranges to every KENYOS project.</p>
+    </div>
+    <div class="brand-row">
+      <div class="brand-card" data-reveal>
+        <div class="brand-bg-accent"></div>
+        <div class="brand-card-name">Empolo</div>
+        <div class="brand-card-tag">German Fashion Sanitary Ware</div>
+        <div class="brand-card-sep"></div>
+        <p class="brand-card-desc">A premium bathroom lifestyle brand from Germany — considered design, quality materials, and functional elegance in every product. The complete suite solution for refined bathroom environments.</p>
+        <ul class="brand-card-list">
+          <li>Designer vanity &amp; basin collections</li>
+          <li>Premium tap &amp; shower systems</li>
+          <li>Statement freestanding baths</li>
+          <li>WC suites, accessories &amp; mirrors</li>
+        </ul>
+        <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore Empolo</span></a>
+      </div>
+      <div class="brand-card" data-reveal data-delay="1">
+        <div class="brand-bg-accent"></div>
+        <div class="brand-card-name">Hettich</div>
+        <div class="brand-card-tag">Interior Hardware — Est. 1888, Germany</div>
+        <div class="brand-card-sep"></div>
+        <p class="brand-card-desc">The global benchmark in furniture hardware engineering. Hettich's precision systems underpin the quality of every KENYOS kitchen drawer, wardrobe door, and cabinet installation — silent, precise, durable.</p>
+        <ul class="brand-card-list">
+          <li>InnoTech &amp; ArciTech drawer systems</li>
+          <li>Concealed hinges &amp; lift systems</li>
+          <li>Wardrobe &amp; sliding door hardware</li>
+          <li>Soft-close &amp; push-to-open technology</li>
+        </ul>
+        <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore Hettich</span></a>
+      </div>
+      <div class="brand-card" data-reveal data-delay="2">
+        <div class="brand-bg-accent"></div>
+        <div class="brand-card-name">CHINT</div>
+        <div class="brand-card-tag">Electrical &amp; Smart Building — 140+ Countries</div>
+        <div class="brand-card-sep"></div>
+        <p class="brand-card-desc">One of the world's leading electrical manufacturers — commercially proven, design-forward solutions for every electrical need from premium switches to full distribution infrastructure and smart building systems.</p>
+        <ul class="brand-card-list">
+          <li>Premium switch &amp; socket collections</li>
+          <li>Distribution boards &amp; protection devices</li>
+          <li>Smart home &amp; building automation</li>
+          <li>Solar &amp; energy management</li>
+        </ul>
+        <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore CHINT</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWROOM: Clear reason to visit -->
+<section class="showroom-split">
+  <div class="showroom-txt wrap">
+    <span class="overline-text" data-reveal style="color:var(--gold)">The KENYOS Showroom</span>
+    <h2 class="headline" data-reveal data-delay="1" style="margin-top:14px">Come and<br>experience it <em>yourself</em></h2>
+    <p data-reveal data-delay="2">Our showroom is not a catalogue — it is a curated environment where you can walk through live kitchen environments, bathroom suites, wardrobe systems, and brand zones for Empolo, Hettich, and CHINT Global. See it, touch it, and make your decision with confidence.</p>
+    <div class="showroom-tags" data-reveal data-delay="3">
+      <span class="s-tag">Empolo Bathroom Zones</span>
+      <span class="s-tag">Kitchen Displays</span>
+      <span class="s-tag">Wardrobe Systems</span>
+      <span class="s-tag">Hettich Hardware</span>
+      <span class="s-tag">CHINT Electrical</span>
+      <span class="s-tag">Door Systems</span>
+    </div>
+    <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('show')" data-reveal data-delay="4"><span>Explore the Showroom</span></a>
+  </div>
+  <div class="showroom-grid">
+    <div class="sg">
+      <img src="showroom_main.jpg" alt="Empolo Bathroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+      <div class="sg-ov"></div>
+      <div class="sg-lb">Empolo Bathroom Suites</div>
+      <div class="sg-line"></div>
+    </div>
+    <div class="sg">
+      <img src="bathroom_classical.jpg" alt="Classical Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+      <div class="sg-ov"></div>
+      <div class="sg-badge">New</div>
+      <div class="sg-lb">Classical Collection</div>
+      <div class="sg-line"></div>
+    </div>
+    <div class="sg">
+      <img src="real_show8.jpg" alt="Showroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+      <div class="sg-ov"></div>
+      <div class="sg-lb">Product Gallery</div>
+      <div class="sg-line"></div>
+    </div>
+    <div class="sg">
+      <img src="accessories_bath.jpg" alt="Accessories" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+      <div class="sg-ov"></div>
+      <div class="sg-badge">Expanding</div>
+      <div class="sg-lb">Accessories Wall</div>
+      <div class="sg-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY KENYOS: 3 pillars only — the ones that actually differentiate -->
+<section id="why-kenyos" style="background:#fff;padding:0;overflow:hidden;position:relative">
+
+  <!-- Subtle gold glow -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(154,124,63,.05) 0%,transparent 70%);pointer-events:none"></div>
+
+  <!-- Intro line that flies in -->
+  <div style="text-align:center;padding:110px 52px 0;position:relative" id="why-intro">
+    <div class="why-overline">Why KENYOS</div>
+    <h2 class="why-headline">
+      <span class="why-word" style="transition-delay:.0s">Three</span>
+      <span class="why-word" style="transition-delay:.12s">reasons</span>
+      <span class="why-word" style="transition-delay:.24s">to</span>
+      <span class="why-word" style="transition-delay:.36s">choose</span>
+      <span class="why-word why-gold" style="transition-delay:.5s">KENYOS</span>
+    </h2>
+  </div>
+
+  <!-- Three panels stacked - each flies in from side as you scroll -->
+  <div style="max-width:1300px;margin:0 auto;padding:72px 52px 120px;display:flex;flex-direction:column;gap:2px;position:relative">
+
+    <!-- REASON 01 -->
+    <div class="why-panel" id="why-p1">
+      <div class="why-panel-num">01</div>
+      <div class="why-panel-body">
+        <div class="why-panel-inner">
+          <div class="why-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <div class="why-panel-title">Complete Interior Source</div>
+            <p class="why-panel-desc">One destination for every interior and building finishing need — from kitchens and wardrobes to bathrooms, doors, wood solutions, and electrical systems. No need to go anywhere else.</p>
+          </div>
+        </div>
+        <div class="why-panel-tag">The complete solution</div>
+      </div>
+    </div>
+
+    <!-- REASON 02 -->
+    <div class="why-panel" id="why-p2">
+      <div class="why-panel-num">02</div>
+      <div class="why-panel-body">
+        <div class="why-panel-inner">
+          <div class="why-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="6"/><path d="M5.75 21a8.25 8.25 0 0 1 12.5 0"/></svg>
+          </div>
+          <div>
+            <div class="why-panel-title">Premium Brand Partnerships</div>
+            <p class="why-panel-desc">We partner only with internationally recognised brands — Empolo, Hettich, CHINT Global — whose quality reputations and product excellence align with our commitment to elevated interiors.</p>
+          </div>
+        </div>
+        <div class="why-panel-tag">World-class brands</div>
+      </div>
+    </div>
+
+    <!-- REASON 03 -->
+    <div class="why-panel" id="why-p3">
+      <div class="why-panel-num">03</div>
+      <div class="why-panel-body">
+        <div class="why-panel-inner">
+          <div class="why-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <div class="why-panel-title">Showroom-Led Decision Making</div>
+            <p class="why-panel-desc">Our showroom is a living environment — not a warehouse. Walk through real kitchen, bathroom, and wardrobe environments, guided by specialists who understand your project from concept to completion.</p>
+          </div>
+        </div>
+        <div class="why-panel-tag">The experience</div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+  /* ── WHY KENYOS ANIMATED SECTION ── */
+  .why-overline{
+    font-family:"Jost",sans-serif;
+    font-size:.68rem;font-weight:500;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:24px;
+    opacity:0;transform:translateY(20px);
+    transition:opacity .7s var(--ease),transform .7s var(--ease);
+  }
+  .why-overline.wvis{opacity:1;transform:translateY(0)}
+
+  .why-headline{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(3.5rem,6.5vw,7.5rem);
+    font-weight:400;letter-spacing:-.02em;
+    line-height:1.02;color:var(--dark);
+    margin-bottom:0;
+    display:flex;flex-wrap:wrap;justify-content:center;gap:.3em;
+  }
+  .why-word{
+    display:inline-block;
+    opacity:0;transform:translateY(60px) skewY(4deg);
+    transition:opacity .75s var(--ease),transform .75s var(--ease);
+  }
+  .why-word.wvis{opacity:1;transform:translateY(0) skewY(0)}
+  .why-gold{font-style:italic;color:var(--gold-lt)}
+
+  /* Panels */
+  .why-panel{
+    display:flex;align-items:stretch;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:2px;
+    overflow:hidden;
+    transition:background .4s,border-color .4s,transform .4s var(--ease);
+    cursor:none;
+    opacity:0;transform:translateX(-80px);
+    transition:opacity .9s var(--ease),transform .9s var(--ease),background .4s,border-color .4s;
+  }
+  .why-panel:nth-child(even){transform:translateX(80px)}
+  .why-panel.wvis{opacity:1;transform:translateX(0)}
+  .why-panel:hover{background:var(--off);border-color:rgba(154,124,63,.35)}
+
+  .why-panel-num{
+    font-family:"Cormorant Garamond",serif;
+    font-size:5rem;font-weight:300;
+    color:rgba(0,0,0,.05);
+    line-height:1;padding:36px 40px;
+    min-width:140px;display:flex;align-items:center;justify-content:center;
+    border-right:1px solid var(--border);
+    flex-shrink:0;
+    transition:color .4s;
+  }
+  .why-panel:hover .why-panel-num{color:rgba(154,124,63,.22)}
+
+  .why-panel-body{
+    flex:1;padding:36px 44px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+  }
+  .why-panel-inner{display:flex;align-items:flex-start;gap:28px;flex:1}
+  .why-icon-wrap{
+    width:52px;height:52px;flex-shrink:0;
+    border:1px solid rgba(154,124,63,.3);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold);
+    transition:border-color .4s,background .4s;
+    margin-top:3px;
+  }
+  .why-icon-wrap svg{width:22px;height:22px}
+  .why-panel:hover .why-icon-wrap{border-color:var(--gold);background:rgba(154,124,63,.1)}
+
+  .why-panel-title{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(1.6rem,2.2vw,2.4rem);
+    font-weight:400;color:var(--dark);margin-bottom:10px;line-height:1.1;
+  }
+  .why-panel-desc{font-size:.9rem;line-height:1.78;color:var(--mid);max-width:580px}
+
+  .why-panel-tag{
+    font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+    color:rgba(154,124,63,.45);
+    white-space:nowrap;flex-shrink:0;
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    padding:0 8px;
+    transition:color .4s;
+  }
+  .why-panel:hover .why-panel-tag{color:var(--gold)}
+
+  /* Gold accent line that animates in */
+  .why-panel::before{
+    content:"";
+    display:block;width:2px;
+    background:linear-gradient(to bottom,var(--gold),transparent);
+    opacity:0;transition:opacity .6s var(--ease);
+    flex-shrink:0;
+  }
+  .why-panel.wvis::before{opacity:1;transition-delay:.3s}
+
+  @media(max-width:860px){
+    .why-headline{font-size:clamp(2.5rem,7vw,4rem)}
+    .why-panel-body{flex-direction:column;gap:16px}
+    .why-panel-tag{writing-mode:horizontal-tb;transform:none}
+    .why-panel-num{min-width:80px;padding:28px 24px;font-size:3.5rem}
+    .why-panel-body{padding:28px 24px}
+    #why-kenyos{padding-left:0 !important}
+  }
+  @media(max-width:580px){
+    .why-panel{flex-direction:column}
+    .why-panel-num{border-right:none;border-bottom:1px solid rgba(255,255,255,.05);min-width:auto;padding:20px 24px;font-size:2.8rem;justify-content:flex-start}
+    .why-panel-inner{flex-direction:column;gap:14px}
+  }
+  </style>
+
+</section>
+
+<!-- GALLERY: 4 images with purpose — each one tells something specific -->
+<section class="section-sm" style="background:#fff">
+  <div class="wrap" style="margin-bottom:48px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div>
+        <span class="overline-text" data-reveal>Our Showroom in Focus</span>
+        <h2 class="subhead" data-reveal data-delay="1" style="margin-top:10px">Four spaces.<br>Every one with <em>purpose</em>.</h2>
+      </div>
+      <a href="#" class="btn btn-outline btn-arrow" data-reveal data-delay="2" onclick="navTo('proj')"><span>View All Projects</span></a>
+    </div>
+  </div>
+  <div class="gal4" data-reveal>
+    <div class="gp"><img src="gal_p16.jpg" alt="Empolo Statement Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="gp-lbl"><span class="ov">Empolo — Statement Vanity</span><p>A dramatic vanity suite — bold mirror, precision fixtures, every detail refined</p></div></div>
+    <div class="gp"><img src="gal_p14.jpg" alt="Empolo Rose Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="gp-lbl"><span class="ov">Empolo — Blush Collection</span><p>The rose bath suite — warmth, softness, and quiet luxury</p></div></div>
+    <div class="gp"><img src="gal_p50.jpg" alt="Empolo Architectural Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="gp-lbl"><span class="ov">Empolo — Architectural Suite</span><p>Clean lines, premium stone, and considered lighting</p></div></div>
+    <div class="gp"><img src="gal_p34.jpg" alt="Empolo Spa Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="gp-lbl"><span class="ov">Empolo — Natural Collection</span><p>The spa environment — natural materials, serene atmosphere</p></div></div>
+  </div>
+</section>
+
+<!-- CTA: One clear action -->
+<section class="cta-section">
+  <div class="cta-bg-texture"></div>
+  <div class="cta-glow"></div>
+  <span class="overline-text" data-reveal style="position:relative">Ready to begin</span>
+  <h2 class="display" data-reveal data-delay="1">Build your next<br>space with <em>KENYOS</em></h2>
+  <p data-reveal data-delay="2">Whether you are designing a private home, a flagship office, or a large commercial development — speak to our team and let us guide you to the right solution.</p>
+  <div class="cta-btns" data-reveal data-delay="3">
+    <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('contact')"><span>Request a Consultation</span></a>
+    <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('show')"><span>Visit Our Showroom</span></a>
+  </div>
+</section>
+
+</div><!-- end home -->
+
+<div id="pg-about" style="display:none">
+  <div class="ph">
+    <div class="ph-bg"><img src="real_show2.jpg" alt="About KENYOS" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><span>About</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Our Story</span>
+      <h1>About <em>KENYOS</em></h1>
+    </div>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="wrap">
+      <div class="about-split">
+        <div class="about-img" data-reveal="left"><img src="emp_vanity.jpg" alt="KENYOS Showroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+        <div class="about-txt" data-reveal="right">
+          <span class="overline-text">Who We Are</span>
+          <h2 class="subhead" style="margin:14px 0 22px">A curated vision for <em>interior excellence</em></h2>
+          <p class="body">KENYOS is a premium interior and building solutions company. We were founded on a single belief: every space — residential, commercial, or institutional — deserves exceptional materials, thoughtful design, and access to the world's finest brands.</p>
+          <p class="body" style="margin-top:14px">We provide a complete, curated source for interior finishing — kitchens, wardrobes, Empolo bathrooms, door systems, wood solutions, and CHINT smart electrical infrastructure. One destination. Every interior need.</p>
+          <p class="body" style="margin-top:14px">Our showroom is not a warehouse. It is a living environment where clients walk through real kitchen environments, bathroom suites, and brand zones, guided by specialists who understand their project from concept to completion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="about-quote-block">
+    <div class="qmark">"</div>
+    <blockquote data-reveal>"Every space has the potential to be extraordinary. Our role is to provide the materials, the expertise, and the vision to make that possible — for every client, on every project."</blockquote>
+    <cite data-reveal data-delay="1">— KENYOS Design &amp; Interiors Philosophy</cite>
+  </div>
+  <section class="section-sm" style="background:#fff">
+    <div class="wrap" style="margin-bottom:48px;text-align:center">
+      <span class="overline-text" data-reveal>Our Values</span>
+      <h2 class="subhead" data-reveal data-delay="1" style="margin-top:13px">What we stand for</h2>
+    </div>
+    <div class="vals-grid">
+      <div class="val" data-reveal><div class="val-icon"></div><div class="val-title">Design Integrity</div><p class="val-desc">Design quality first, every time. Every product in our range was chosen for aesthetic excellence and material quality — never just price.</p></div>
+      <div class="val" data-reveal data-delay="1"><div class="val-icon"></div><div class="val-title">Trusted Partnerships</div><p class="val-desc">Empolo, Hettich, CHINT Global — brands chosen for quality, reliability, and shared values of innovation and precision.</p></div>
+      <div class="val" data-reveal data-delay="2"><div class="val-icon"></div><div class="val-title">Client First</div><p class="val-desc">Every consultation, showroom visit, and delivery is built around the specific needs, vision, and timeline of each client we serve.</p></div>
+      <div class="val" data-reveal data-delay="3"><div class="val-icon"></div><div class="val-title">Always Expanding</div><p class="val-desc">We continuously grow our product ecosystem — new brand partnerships, new collections, and new showroom zones are always in development.</p></div>
+    </div>
+  </section>
+  <section class="cta-section">
+    <div class="cta-bg-texture"></div><div class="cta-glow"></div>
+    <span class="overline-text" style="position:relative">Work With Us</span>
+    <h2 data-reveal style="font-size:clamp(2.8rem,5vw,6rem)">Begin your<br><em>KENYOS</em> journey</h2>
+    <p data-reveal data-delay="1">Explore our collections, visit our showroom, or speak to our team about your project.</p>
+    <div class="cta-btns" data-reveal data-delay="2">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('contact')"><span>Get in Touch</span></a>
+      <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('col')"><span>View Collections</span></a>
+    </div>
+  </section>
+</div>
+
+<div id="pg-col" style="display:none">
+  <div class="ph">
+    <div class="ph-bg"><img src="cat_kitchen.jpg" alt="Collections" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><span>Collections</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Our Product Range</span>
+      <h1>The <em>KENYOS</em> Collections</h1>
+    </div>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="wrap">
+      <div style="text-align:center;margin-bottom:72px">
+        <span class="overline-text" data-reveal>Six Premium Collections</span>
+        <h2 class="headline" data-reveal data-delay="1" style="margin-top:14px">Everything your space<br>could ever <em>need</em></h2>
+        <p class="lead" data-reveal data-delay="2" style="max-width:540px;margin:16px auto 0">Every category we carry was chosen with intention — products with a purpose, brands with a reputation, and collections that perform as well as they look.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border)">
+        <div style="background:#fff;padding:44px 36px;cursor:none;transition:background .3s" class="col-cat-card" data-reveal>
+          <span class="overline-text" style="display:block;margin-bottom:12px">01</span>
+          <h3 class="subhead" style="font-size:1.6rem;margin-bottom:12px">Kitchens</h3>
+          <p class="body" style="margin-bottom:20px">Luxury kitchen environments — cabinetry, island systems, and architectural finishes made to your exact specification with Hettich hardware throughout.</p>
+          <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('home')"><span>Explore</span></a>
+        </div>
+        <div style="background:#fff;padding:44px 36px;cursor:none;transition:background .3s" data-reveal data-delay="1">
+          <span class="overline-text" style="display:block;margin-bottom:12px">02</span>
+          <h3 class="subhead" style="font-size:1.6rem;margin-bottom:12px">Wardrobes</h3>
+          <p class="body" style="margin-bottom:20px">Precision fitted wardrobe and dressing room systems — walk-in, hinged, and sliding configurations with full Hettich internal fitting options.</p>
+          <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('home')"><span>Explore</span></a>
+        </div>
+        <div style="background:#fff;padding:44px 36px;cursor:none;transition:background .3s" data-reveal data-delay="2">
+          <span class="overline-text" style="display:block;margin-bottom:12px">03 — Empolo</span>
+          <h3 class="subhead" style="font-size:1.6rem;margin-bottom:12px">Bathroom Suites</h3>
+          <p class="body" style="margin-bottom:20px">The complete Empolo German sanitaryware collection — freestanding baths, designer vanities, tap systems, shower enclosures, and accessories.</p>
+          <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore Empolo</span></a>
+        </div>
+        <div style="background:#fff;padding:44px 36px;cursor:none;transition:background .3s" data-reveal>
+          <span class="overline-text" style="display:block;margin-bottom:12px">04</span>
+          <h3 class="subhead" style="font-size:1.6rem;margin-bottom:12px">Doors &amp; Entry</h3>
+          <p class="body" style="margin-bottom:20px">Architectural-grade UPVC and aluminium door systems — entrance doors, sliding systems, curtain wall, and frameless glazing for every building type.</p>
+          <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('home')"><span>Explore</span></a>
+        </div>
+        <div style="background:#fff;padding:44px 36px;cursor:none;transition:background .3s" data-reveal data-delay="1">
+          <span class="overline-text" style="display:block;margin-bottom:12px">05</span>
+          <h3 class="subhead" style="font-size:1.6rem;margin-bottom:12px">Wood Solutions</h3>
+          <p class="body" style="margin-bottom:20px">Premium MDF board, architectural timber, decorative veneers, precision CNC cutting services, and edge banding in every finish — the foundation of every beautiful interior.</p>
+          <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('home')"><span>Explore</span></a>
+        </div>
+        <div style="background:#fff;padding:44px 36px;cursor:none;transition:background .3s" data-reveal data-delay="2">
+          <span class="overline-text" style="display:block;margin-bottom:12px">06 — CHINT Global</span>
+          <h3 class="subhead" style="font-size:1.6rem;margin-bottom:12px">Electrical &amp; Smart</h3>
+          <p class="body" style="margin-bottom:20px">Designer switch and socket collections, distribution boards, MCBs, smart home wiring, and solar energy management — the full CHINT Global range.</p>
+          <a href="#" class="btn btn-outline btn-arrow" onclick="navTo('brands')"><span>Explore CHINT</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="cta-section">
+    <div class="cta-bg-texture"></div><div class="cta-glow"></div>
+    <span class="overline-text" style="position:relative">Speak to Us</span>
+    <h2 data-reveal style="font-size:clamp(2.8rem,5vw,6rem)">Not sure<br>where to <em>start?</em></h2>
+    <p data-reveal data-delay="1">Our team is available to discuss your project requirements and guide you to the right products and solutions.</p>
+    <div class="cta-btns" data-reveal data-delay="2">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('contact')"><span>Book a Consultation</span></a>
+      <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('show')"><span>Visit Our Showroom</span></a>
+    </div>
+  </section>
+</div>
+
+<div id="pg-brands" style="display:none">
+  <div class="ph">
+    <div class="ph-bg"><img src="emp_facade.jpg" alt="Empolo Showroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><span>Brands</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Our Partners</span>
+      <h1>Global Brands.<br><em>Curated</em> Excellence.</h1>
+    </div>
+  </div>
+  <section class="section-sm" style="background:var(--dark);text-align:center;padding:80px 52px">
+    <span class="overline-text" data-reveal style="color:var(--gold)">Why Our Brand Partnerships Matter</span>
+    <h2 class="headline" data-reveal data-delay="1" style="color:var(--white);margin-top:14px">We do not carry products.<br>We carry <em>reputations</em>.</h2>
+    <p class="lead" data-reveal data-delay="2" style="color:rgba(255,255,255,.45);max-width:580px;margin:18px auto 0">Every brand in our portfolio was chosen for a reason — engineering excellence, design innovation, or category leadership. No compromise, no filler.</p>
+  </section>
+  <div class="brands-pg-grid">
+    <div class="bpg-card" data-reveal>
+      <div class="bpg-img"><img src="emp_main.jpg" alt="Empolo Main Showroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+      <div class="bpg-body">
+        <div class="bpg-name">Empolo</div>
+        <span class="bpg-type">German Fashion Sanitary Ware Brand</span>
+        <p class="bpg-d">Empolo is a premium bathroom lifestyle brand from Germany — bringing together considered design, quality materials, and functional elegance. Their collection covers every element of the modern bathroom, from statement basins to precision shower systems, designed to complement every interior style.</p>
+        <ul class="bpg-li"><li>Designer Basins &amp; Vanities</li><li>Tap &amp; Mixer Collections</li><li>Shower Enclosures &amp; Systems</li><li>Freestanding &amp; Built-In Baths</li><li>WC &amp; Bidet Suites</li><li>Accessories &amp; Mirror Collections</li></ul>
+      </div>
+    </div>
+    <div class="bpg-card" data-reveal data-delay="1">
+      <div class="bpg-img" style="background:#fff;display:flex;align-items:center;justify-content:center;height:260px">
+        <div style="text-align:center">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:400;letter-spacing:.1em;color:var(--dark)">Hettich</div>
+          <div style="font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:9px;font-family:'Jost',sans-serif">Est. 1888 · Germany</div>
+        </div>
+      </div>
+      <div class="bpg-body">
+        <div class="bpg-name">Hettich</div>
+        <span class="bpg-type">Interior Hardware &amp; Fitting Systems</span>
+        <p class="bpg-d">Hettich is one of the world's leading manufacturers of premium furniture fittings. Founded in Germany in 1888 and trusted by the finest furniture makers globally, their engineering precision defines the quality of every KENYOS kitchen, wardrobe, and cabinet installation — silent, precise, and built to last.</p>
+        <ul class="bpg-li"><li>InnoTech &amp; ArciTech Drawer Systems</li><li>Concealed Cabinet Hinges</li><li>Wardrobe &amp; Sliding Door Systems</li><li>Lift, Flap &amp; Pocket Door Systems</li><li>Soft-Close &amp; Push-To-Open Technology</li></ul>
+      </div>
+    </div>
+    <div class="bpg-card" data-reveal data-delay="2">
+      <div class="bpg-img" style="background:#fff;display:flex;align-items:center;justify-content:center;height:260px">
+        <div style="text-align:center">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:400;letter-spacing:.1em;color:var(--dark)">CHINT</div>
+          <div style="font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:9px;font-family:'Jost',sans-serif">Global · 140+ Countries</div>
+        </div>
+      </div>
+      <div class="bpg-body">
+        <div class="bpg-name">CHINT Global</div>
+        <span class="bpg-type">Electrical &amp; Smart Building Solutions</span>
+        <p class="bpg-d">CHINT Global is one of the world's largest and most trusted electrical manufacturers, operating across 140+ countries. Their range spans the complete low-voltage electrical spectrum — from designer switch and socket collections through to distribution infrastructure, protection devices, and smart energy management.</p>
+        <ul class="bpg-li"><li>Premium Switch &amp; Socket Collections</li><li>Miniature Circuit Breakers (MCBs)</li><li>Distribution Boards &amp; Panels</li><li>RCDs, RCBOs &amp; Surge Protection</li><li>Smart Home &amp; Energy Management</li></ul>
+      </div>
+    </div>
+  </div>
+  <section style="background:#fff;padding:80px 52px;text-align:center">
+    <span class="overline-text" data-reveal>Growing Portfolio</span>
+    <h2 class="subhead" data-reveal data-delay="1" style="margin-top:13px;max-width:500px;margin-left:auto;margin-right:auto">More premium brands.<br><em>Coming soon.</em></h2>
+    <p class="lead" data-reveal data-delay="2" style="max-width:480px;margin:16px auto 28px">We are in discussions with additional international brands across kitchens, surfaces, and smart home technology. Register your interest below.</p>
+    <a href="#" class="btn btn-dark btn-arrow" data-reveal data-delay="3" onclick="navTo('contact')"><span>Register Interest</span></a>
+  </section>
+</div>
+
+<div id="pg-show" style="display:none">
+  <div class="ph">
+    <div class="ph-bg"><img src="hero_hq.jpg" alt="KENYOS Showroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><span>Showroom</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Experience KENYOS</span>
+      <h1>The <em>KENYOS</em> Showroom</h1>
+    </div>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+      <div>
+        <span class="overline-text" data-reveal>A Curated Destination</span>
+        <h2 class="subhead" data-reveal data-delay="1" style="margin:14px 0 22px">Not a warehouse.<br>A <em>product world</em>.</h2>
+        <p class="body" data-reveal data-delay="2">Our showroom is designed to help you make decisions with confidence. Walk through live kitchen environments, bathroom suites, and brand zones — each one curated to show products in real context, not on a shelf.</p>
+        <p class="body" data-reveal data-delay="3" style="margin-top:14px">Every zone has a purpose. The Empolo bathroom areas show three distinct suite styles. The Hettich hardware wall demonstrates the feel of drawer systems and soft-close mechanisms. The CHINT electrical zone displays the full switch and socket range. You will leave knowing exactly what you want.</p>
+        <div style="margin-top:36px" data-reveal data-delay="4">
+          <a href="#" class="btn btn-dark btn-arrow" onclick="navTo('contact')"><span>Book a Showroom Visit</span></a>
+        </div>
+      </div>
+      <div data-reveal="right" style="overflow:hidden;height:480px"><img src="real_show1.jpg" alt="Showroom Interior" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    </div>
+  </section>
+  <div style="background:var(--dark);padding:2px">
+    <div class="show-zones">
+      <div class="sz" data-reveal="left"><img src="emp_main.jpg" alt="Empolo Bathrooms" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="sz-ov"></div><div class="sz-c"><div class="sz-lb">01 — Empolo Collection</div><div class="sz-t">Bathroom Suites</div></div></div>
+      <div class="sz" data-reveal><img src="emp_marble.jpg" alt="Marble Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="sz-ov"></div><div class="sz-c"><div class="sz-lb">02 — Premium Series</div><div class="sz-t">Marble &amp; Stone</div></div><div class="sz-new">Expanding</div></div>
+      <div class="sz" data-reveal="right"><img src="cat_corridor.jpg" alt="Gallery" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="sz-ov"></div><div class="sz-c"><div class="sz-lb">03 — Product Gallery</div><div class="sz-t">Display Zones</div></div></div>
+      <div class="sz" data-reveal="left"><img src="accessories_bath.jpg" alt="Accessories" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="sz-ov"></div><div class="sz-c"><div class="sz-lb">04 — Accessories</div><div class="sz-t">Accessories Wall</div></div></div>
+      <div class="sz" data-reveal><img src="basin_island.jpg" alt="Basin Display" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="sz-ov"></div><div class="sz-c"><div class="sz-lb">05 — Empolo Basins</div><div class="sz-t">Basin Collection</div></div><div class="sz-new">New</div></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <div class="cta-bg-texture"></div><div class="cta-glow"></div>
+    <span class="overline-text" style="position:relative">Plan Your Visit</span>
+    <h2 data-reveal style="font-size:clamp(2.8rem,5vw,6rem)">Experience KENYOS<br><em>in person</em></h2>
+    <p data-reveal data-delay="1">Our showroom team is available to guide you through every product zone and help you define the right solutions for your space.</p>
+    <div class="cta-btns" data-reveal data-delay="2">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('contact')"><span>Book Your Visit</span></a>
+      <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('contact')"><span>Contact Our Team</span></a>
+    </div>
+  </section>
+</div>
+
+<div id="pg-proj" style="display:none">
+  <div class="ph">
+    <div class="ph-bg"><img src="emp_class.jpg" alt="Projects" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><span>Projects</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Our Work</span>
+      <h1>Projects &amp; <em>Inspiration</em></h1>
+    </div>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="wrap">
+      <div style="text-align:center;margin-bottom:72px">
+        <span class="overline-text" data-reveal>Portfolio</span>
+        <h2 class="headline" data-reveal data-delay="1" style="margin-top:13px">Spaces we have <em>defined</em></h2>
+        <p class="lead" data-reveal data-delay="2" style="max-width:500px;margin:16px auto 0">A curated selection of residential, commercial, and office interiors showcasing the quality and range of KENYOS products in real projects.</p>
+      </div>
+      <div class="prj-g" data-reveal>
+        <div class="prj-i"><div class="prj-img-wrap"><img src="hero_hq.jpg" alt="KENYOS Showroom" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="prj-ov"><span class="prj-view">View Project</span></div></div><div class="prj-meta"><span class="prj-tp">KENYOS Showroom</span><div class="prj-name">Premium Showroom Interior</div></div></div>
+        <div class="prj-i"><div class="prj-img-wrap"><img src="emp_marble.jpg" alt="Marble Suite" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="prj-ov"><span class="prj-view">View Project</span></div></div><div class="prj-meta"><span class="prj-tp">Empolo — Bathroom</span><div class="prj-name">Marble &amp; Stone Suite</div></div></div>
+        <div class="prj-i"><div class="prj-img-wrap"><img src="real_show2.jpg" alt="Gallery" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="prj-ov"><span class="prj-view">View Project</span></div></div><div class="prj-meta"><span class="prj-tp">Showroom Display</span><div class="prj-name">Product Gallery Zone</div></div></div>
+        <div class="prj-i"><div class="prj-img-wrap"><img src="emp_vanity.jpg" alt="Vanity Display" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="prj-ov"><span class="prj-view">View Project</span></div></div><div class="prj-meta"><span class="prj-tp">Empolo Collection</span><div class="prj-name">Vanity &amp; Basin Display</div></div></div>
+        <div class="prj-i"><div class="prj-img-wrap"><img src="cat_doors.jpg" alt="Showroom Zone" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="prj-ov"><span class="prj-view">View Project</span></div></div><div class="prj-meta"><span class="prj-tp">Product Zone</span><div class="prj-name">Display &amp; Product Gallery</div></div></div>
+        <div class="prj-i"><div class="prj-img-wrap"><img src="basin_island.jpg" alt="Basin Island" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"><div class="prj-ov"><span class="prj-view">View Project</span></div></div><div class="prj-meta"><span class="prj-tp">Empolo — Basins</span><div class="prj-name">Central Basin Island</div></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="cta-section">
+    <div class="cta-bg-texture"></div><div class="cta-glow"></div>
+    <span class="overline-text" style="position:relative">Start Your Project</span>
+    <h2 data-reveal style="font-size:clamp(2.8rem,5vw,6rem)">Your space next.</h2>
+    <p data-reveal data-delay="1">Share your brief and we will guide you to the right products and solutions for your space.</p>
+    <div class="cta-btns" data-reveal data-delay="2">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('contact')"><span>Start a Project</span></a>
+    </div>
+  </section>
+</div>
+
+<div id="pg-contact" style="display:none">
+  <div class="ph" style="height:50vh;min-height:380px">
+    <div class="ph-bg"><img src="cat_wardrobe.jpg" alt="Contact" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><span>Contact</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Get in Touch</span>
+      <h1>Let us <em>start</em><br>a conversation</h1>
+    </div>
+  </div>
+  <section class="section" style="background:var(--white)">
+    <div class="wrap">
+      <div class="ct-wrap">
+        <div>
+          <span class="overline-text" data-reveal>Contact KENYOS</span>
+          <h2 class="subhead" data-reveal data-delay="1" style="margin:14px 0 22px">We would love to<br>hear from <em>you</em></h2>
+          <p class="body" data-reveal data-delay="2">Whether you are planning a residential renovation, a commercial fit-out, or simply want to explore our collections — our team is ready to guide you.</p>
+          <div data-reveal data-delay="3" style="margin-top:40px">
+            <div class="ctd"><div class="ctd-l">Showroom &amp; Head Office</div><div class="ctd-v">KENYOS Showroom<br>Premium Interior Solutions<br>Nairobi, Kenya</div></div>
+            <div class="ctd"><div class="ctd-l">Telephone</div><div class="ctd-v">+254 000 000 000</div></div>
+            <div class="ctd"><div class="ctd-l">Email</div><div class="ctd-v">hello@kenyos.com</div></div>
+            <div class="ctd"><div class="ctd-l">WhatsApp</div><div class="ctd-v">+254 000 000 000</div></div>
+            <div class="ctd"><div class="ctd-l">Showroom Hours</div><div class="ctd-v">Monday – Friday: 8:00am – 5:30pm<br>Saturday: 9:00am – 3:00pm<br>Sunday: By Appointment</div></div>
+          </div>
+        </div>
+        <div data-reveal="right">
+          <span class="overline-text" style="display:block;margin-bottom:28px">Send an Enquiry</span>
+          <form onsubmit="return handleForm(event)">
+            <div class="fr2">
+              <div class="fg"><label class="fl">First Name</label><input type="text" class="fi" placeholder="Your first name"></div>
+              <div class="fg"><label class="fl">Last Name</label><input type="text" class="fi" placeholder="Your last name"></div>
+            </div>
+            <div class="fg"><label class="fl">Email Address</label><input type="email" class="fi" placeholder="your@email.com"></div>
+            <div class="fg"><label class="fl">Phone Number</label><input type="tel" class="fi" placeholder="+254 000 000 000"></div>
+            <div class="fg"><label class="fl">Project Type</label><select class="fsel"><option value="">Select project type</option><option>Residential - New Build</option><option>Residential - Renovation</option><option>Office Interior</option><option>Commercial Development</option><option>Product Enquiry Only</option><option>Showroom Visit Request</option></select></div>
+            <div class="fg"><label class="fl">Area of Interest</label><select class="fsel"><option value="">Select area of interest</option><option>Kitchens</option><option>Wardrobes</option><option>Bathroom and Sanitaryware - Empolo</option><option>Wood Solutions and Joinery</option><option>Doors - UPVC and Aluminium</option><option>Electrical Solutions - CHINT Global</option><option>Interior Hardware - Hettich</option><option>Multiple Areas</option></select></div>
+            <div class="fg"><label class="fl">Your Message</label><textarea class="fta" placeholder="Tell us about your project, timeline, and any specific requirements"></textarea></div>
+            <button type="submit" class="btn btn-dark btn-arrow" style="width:100%;justify-content:center"><span>Send Enquiry</span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div style="background:var(--dark);height:260px;display:flex;align-items:center;justify-content:center">
+    <div style="text-align:center">
+      <span class="overline-text" style="display:block;margin-bottom:12px">Find Us</span>
+      <p style="font-size:.9rem;color:rgba(255,255,255,.35)">Nairobi, Kenya — Map integration available</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ WOOD SOLUTIONS PAGE ════ -->
+<div id="pg-wood" style="display:none">
+
+  <!-- Page Header -->
+  <div class="ph">
+    <div class="ph-bg"><img src="cat_corridor.jpg" alt="Wood Solutions" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div class="ph-ov"></div>
+    <div class="ph-content">
+      <div class="bc"><a href="#" onclick="navTo('home')">Home</a><span>—</span><a href="#" onclick="navTo('col')">Collections</a><span>—</span><span>Wood Solutions</span></div>
+      <span class="overline-text" style="color:rgba(255,255,255,.6)">Collection 05</span>
+      <h1>Wood <em>Solutions</em></h1>
+    </div>
+  </div>
+
+  <!-- Intro -->
+  <section style="background:#fff;padding:80px 0;border-bottom:1px solid var(--border)">
+    <div style="max-width:1240px;margin:0 auto;padding:0 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+      <div>
+        <span class="overline-text" data-reveal>The Foundation of Every Interior</span>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,3.5rem);font-weight:400;color:var(--dark);margin:14px 0 20px;line-height:1.06" data-reveal data-delay="1">Premium boards &amp; veneers<br>for every <em style="font-style:italic;color:var(--gold)">application</em></h2>
+        <p style="font-size:.95rem;line-height:1.85;color:var(--mid);margin-bottom:16px" data-reveal data-delay="2">Every beautiful interior starts with a surface. Our curated board and veneer range spans natural wood veneers, high-performance matte and gloss boards, textured surface effects, and speciality finishes — all selected for design integrity and manufacturing quality.</p>
+        <p style="font-size:.95rem;line-height:1.85;color:var(--mid)" data-reveal data-delay="3">Available in standard and large-format panels, with matching edge banding and CNC cutting services available in-house. Click any finish below to explore its full specification and application guidance.</p>
+      </div>
+      <div data-reveal="right" style="overflow:hidden;height:420px"><img src="cat_wood.jpg" alt="Wood Finishes" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section style="background:#fff;padding:72px 0 100px">
+    <div style="max-width:1240px;margin:0 auto;padding:0 52px">
+      <div style="margin-bottom:52px" data-reveal>
+        <span class="overline-text">Surface &amp; Finish Range</span>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,2.5vw,2.8rem);font-weight:400;color:var(--dark);margin-top:12px">Select a finish to <em style="font-style:italic;color:var(--gold)">explore</em></h2>
+        <p style="font-size:.88rem;color:var(--mid);margin-top:8px">Click any product card for full specifications and application details.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:var(--border)" data-reveal>
+        <div class="wpc" onclick="openWood('wd-wood_p01')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p01.jpg" alt="Pearl Stone" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Stone Effect Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Pearl Stone</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p02')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p02.jpg" alt="Natural Oak" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Wood Veneer Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Natural Oak</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p03')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p03.jpg" alt="Arctic White" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">High Gloss Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Arctic White</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p04')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p04.jpg" alt="Driftwood Grey" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Textured Wood Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Driftwood Grey</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p05')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p05.jpg" alt="Ivory Linen" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Matte Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Ivory Linen</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p06')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p06.jpg" alt="Cinnamon Oak" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Wood Veneer Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Cinnamon Oak</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p07')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p07.jpg" alt="Silver Weave" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Metallic Texture Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Silver Weave</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p08')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p08.jpg" alt="Cashmere" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Suede Finish Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Cashmere</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p09')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p09.jpg" alt="Sahara Linen" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Fabric Effect Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Sahara Linen</div>
+          </div>
+        </div>
+        <div class="wpc" onclick="openWood('wd-wood_p10')" style="background:#fff;overflow:hidden;cursor:none;transition:box-shadow .35s,transform .35s">
+          <div style="aspect-ratio:1/1;overflow:hidden;position:relative">
+            <img src="wood_p10.jpg" alt="Graphite Stone" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .35s" class="wpc-ov"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s" class="wpc-plus">
+              <span style="font-size:1.1rem;color:var(--dark);line-height:1">+</span>
+            </div>
+          </div>
+          <div style="padding:16px 16px 20px;border-top:1px solid var(--border)">
+            <span style="font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px">Matt Stone Board</span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--dark)">Graphite Stone</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" style="padding:90px 52px">
+    <div class="cta-bg-texture"></div><div class="cta-glow"></div>
+    <span class="overline-text" style="position:relative">Request Samples</span>
+    <h2 data-reveal style="font-size:clamp(2.4rem,4vw,5rem)">Visit our showroom<br>to see every <em>finish</em> in person.</h2>
+    <p data-reveal data-delay="1">Full sample boards are available in our showroom. Our team can advise on the right finish for your specific project and application.</p>
+    <div class="cta-btns" data-reveal data-delay="2">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="navTo('contact')"><span>Request Samples</span></a>
+      <a href="#" class="btn btn-ghost-w btn-arrow" onclick="navTo('show')"><span>Visit Showroom</span></a>
+    </div>
+  </section>
+
+</div><!-- end wood page -->
+
+
+<!-- WOOD PRODUCT MODALS -->
+<div id="wood-modal-bg" onclick="closeWood()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;backdrop-filter:blur(4px)"></div>
+
+<div id="wd-wood_p01" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p01.jpg" alt="Pearl Stone" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Stone Effect Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Pearl Stone</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A delicate light grey stone effect with natural mineral veining — refined and understated, ideal for contemporary cabinetry and wall panels.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available in matte and satin finish</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Suitable for kitchen doors & wardrobe panels</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Moisture-resistant core board</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Thickness: 18mm & 22mm</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Compatible with all edge banding profiles</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p02" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p02.jpg" alt="Natural Oak" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Wood Veneer Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Natural Oak</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">Clean, open-grain natural oak veneer with warm blonde tones — the timeless classic for kitchens, wardrobes, and fitted furniture.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Real wood veneer surface</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Stable engineered core board</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available in horizontal & vertical grain</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Pre-finished or raw veneer options</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Ideal for high-specification joinery</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p03" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p03.jpg" alt="Arctic White" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">High Gloss Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Arctic White</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A crisp, clean high-gloss white with a smooth reflective surface — the benchmark finish for modern handleless kitchens and vanity units.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>High-gloss lacquer surface</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Scratch and UV resistant</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Easy-clean wipe surface</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Thickness: 18mm standard</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available in 2800mm x 1220mm panels</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p04" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p04.jpg" alt="Driftwood Grey" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Textured Wood Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Driftwood Grey</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A tactile weathered timber finish in cool grey-brown tones — raw, honest texture that brings natural warmth to any interior.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Deep embossed wood-grain texture</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Sync texture-to-print matching available</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Suitable for wall panelling & doors</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Anti-fingerprint surface treatment</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Compatible with invisible hinge systems</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p05" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p05.jpg" alt="Ivory Linen" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Matte Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Ivory Linen</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">Soft warm cream in a smooth matte finish — versatile and elegant, perfect for creating calm, considered interiors without distraction.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Soft-touch matte surface</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Fingermark-resistant coating</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Pairs with all hardware finishes</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Light reflectance optimised for smaller spaces</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Standard and thick-panel options available</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p06" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p06.jpg" alt="Cinnamon Oak" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Wood Veneer Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Cinnamon Oak</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A richer, mid-toned oak veneer with warm amber and brown grain character — depth and warmth for traditional and contemporary interiors alike.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Natural oak veneer — premium grade</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Rich amber-brown tonal variation</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available book-matched or random grain</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Ideal for island fronts and feature panels</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Can be oiled, lacquered, or wax-finished</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p07" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p07.jpg" alt="Silver Weave" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Metallic Texture Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Silver Weave</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A fine crosshatch metallic pattern in cool silver-grey — adds subtle industrial sophistication to doors, panels, and feature surfaces.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Woven metallic surface effect</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Durable resin-coated finish</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Ideal for commercial and high-traffic applications</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Pairs with brushed steel and black hardware</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available in 2800mm panels</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p08" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p08.jpg" alt="Cashmere" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Suede Finish Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Cashmere</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">An ultra-fine matte suede-effect surface in warm off-white — soft to the touch, luxurious in appearance, and beautifully resistant to fingermarks.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Soft suede-effect surface texture</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Premium anti-fingerprint coating</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Warm off-white — works with all palettes</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Ideal for bedroom and dressing room furniture</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available in 18mm and 22mm thickness</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p09" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p09.jpg" alt="Sahara Linen" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Fabric Effect Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Sahara Linen</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A woven linen-effect texture in warm natural hues — the organic surface quality adds artisan character to modern fitted environments.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Tactile woven fabric-effect surface</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Warm sandy-beige tone</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Ideal for accent panels and feature walls</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Compatible with all edge banding</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available with matching solid colour edging</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wd-wood_p10" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fff;width:min(820px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.25)">
+  <button onclick="closeWood()" style="position:sticky;top:0;right:0;float:right;margin:16px 16px 0 0;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);background:none;border:none;cursor:none;font-family:'Jost',sans-serif;z-index:2">Close ✕</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;clear:both">
+    <div style="aspect-ratio:1/1;overflow:hidden"><img src="wood_p10.jpg" alt="Graphite Stone" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+    <div style="padding:44px 40px;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px">Matt Stone Board</span>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--dark);margin-bottom:16px;line-height:1.06">Graphite Stone</h3>
+      <div style="width:32px;height:2px;background:var(--gold);margin-bottom:20px"></div>
+      <p style="font-size:.9rem;line-height:1.82;color:var(--mid);margin-bottom:28px">A dense, even anthracite grey with a fine stone-effect surface — bold, architectural, and striking when used for island fronts or feature panels.</p>
+      <ul style="list-style:none"><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Fine stone-effect matt surface</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Deep architectural anthracite</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Bold feature panel choice</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Pairs with brass and gold hardware</li><li style="display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--dark);padding:10px 0;border-bottom:1px solid var(--border)"><span style="color:var(--gold);flex-shrink:0">—</span>Available 18mm & 22mm — large format panels</li></ul>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+        <p style="font-size:.78rem;color:var(--mid)">Sample boards available in our showroom.</p>
+        <a href="#" class="btn btn-dark btn-arrow" onclick="closeWood();navTo('contact')" style="margin-top:16px;display:inline-flex"><span>Request This Sample</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.wpc:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-3px)}
+.wpc:hover .wpc-ov{background:rgba(0,0,0,.12) !important}
+.wpc:hover .wpc-plus{opacity:1 !important}
+@media(max-width:1100px){
+  #pg-wood [style*="repeat(5,1fr)"]{grid-template-columns:repeat(3,1fr) !important}
+}
+@media(max-width:680px){
+  #pg-wood [style*="repeat(5,1fr)"]{grid-template-columns:repeat(2,1fr) !important}
+  #pg-wood [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+  [id^="wd-"] [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}
+}
+</style>
+
+
+<footer>
+  <div class="foot-inner">
+    <div>
+      <a href="#" onclick="navTo('home')" style="text-decoration:none">
+        <span class="foot-logo">KENYOS</span>
+        <span class="foot-logo-sub">Interior &amp; Building Solutions</span>
+      </a>
+      <p class="foot-tagline">A curated destination for premium interior and building finishing solutions — kitchens, wardrobes, Empolo bathrooms, doors, CHINT electrical, and architectural finishing.</p>
+      <div class="foot-social">
+        <a href="#" class="soc">IG</a>
+        <a href="#" class="soc">FB</a>
+        <a href="#" class="soc">LI</a>
+        <a href="#" class="soc">WA</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Collections</h4>
+      <ul>
+        <li><a href="#" onclick="navTo('col')">Kitchens</a></li>
+        <li><a href="#" onclick="navTo('col')">Wardrobes</a></li>
+        <li><a href="#" onclick="navTo('col')">Bathroom Suites</a></li>
+        <li><a href="#" onclick="navTo('col')">Doors &amp; Entry</a></li>
+        <li><a href="#" onclick="navTo('col')">Wood Solutions</a></li>
+        <li><a href="#" onclick="navTo('col')">Electrical &amp; Smart</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Brands</h4>
+      <ul>
+        <li><a href="#" onclick="navTo('brands')">Empolo</a></li>
+        <li><a href="#" onclick="navTo('brands')">Hettich</a></li>
+        <li><a href="#" onclick="navTo('brands')">CHINT Global</a></li>
+      </ul>
+      <h4 style="margin-top:26px">Company</h4>
+      <ul>
+        <li><a href="#" onclick="navTo('about')">About KENYOS</a></li>
+        <li><a href="#" onclick="navTo('show')">Showroom</a></li>
+        <li><a href="#" onclick="navTo('proj')">Projects</a></li>
+        <li><a href="#" onclick="navTo('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <div class="foot-ct">
+        <strong>Location</strong>Nairobi, Kenya
+        <strong>Phone</strong>+254 000 000 000
+        <strong>Email</strong>hello@kenyos.com
+        <strong>WhatsApp</strong>+254 000 000 000
+        <strong>Hours</strong>Mon–Fri: 8am–5:30pm<br>Sat: 9am–3pm
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p class="foot-copy">&copy; 2025 KENYOS. Premium Interior &amp; Building Solutions. All rights reserved.</p>
+    <div class="foot-gold-line"></div>
+    <p class="foot-copy">Design. Craftsmanship. Excellence.</p>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+var dot = document.getElementById("dot");
+var ring = document.getElementById("ring");
+var mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener("mousemove", function(e) {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + "px"; dot.style.top = my + "px";
+});
+(function loop() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + "px"; ring.style.top = ry + "px";
+  requestAnimationFrame(loop);
+})();
+function setCursorMode(light) {
+  if (light) { dot.classList.add("lgt"); ring.classList.add("lgt"); }
+  else { dot.classList.remove("lgt"); ring.classList.remove("lgt"); }
+}
+function bindCursorHovers() {
+  document.querySelectorAll("a, button, .pillar, .brand-card, .eg-cell, .gp, .prj-i, .sz, .bpg-card, .collection-panel, .sg").forEach(function(el) {
+    el.addEventListener("mouseenter", function() { dot.style.width = "4px"; dot.style.height = "4px"; ring.style.width = "52px"; ring.style.height = "52px"; });
+    el.addEventListener("mouseleave", function() { dot.style.width = "8px"; dot.style.height = "8px"; ring.style.width = "38px"; ring.style.height = "38px"; });
+  });
+  var darkZones = document.querySelectorAll(".hero, .empolo-hero, .cta-section, .showroom-split, .brands-pg-header, .about-quote-block, .marquee, footer, .ph, .show-zones");
+  darkZones.forEach(function(el) {
+    el.addEventListener("mouseenter", function() { setCursorMode(true); });
+    el.addEventListener("mouseleave", function() { setCursorMode(false); });
+  });
+}
+
+/* ── NAV SCROLL ── */
+var nav = document.getElementById("nav");
+window.addEventListener("scroll", function() {
+  var onHome = document.getElementById("pg-home").style.display !== "none";
+  if (window.scrollY > 60) {
+    nav.classList.add("solid");
+    nav.classList.remove("dark-mode");
+  } else if (onHome) {
+    nav.classList.remove("solid");
+    nav.classList.add("dark-mode");
+  } else {
+    nav.classList.add("solid");
+    nav.classList.remove("dark-mode");
+  }
+}, { passive: true });
+
+/* ── MOBILE MENU ── */
+function openMM() { document.getElementById("mmenu").classList.add("open"); }
+function closeMM() { document.getElementById("mmenu").classList.remove("open"); }
+
+/* ── PAGE ROUTING ──
+   Key fix: only reveal elements that haven't been shown yet.
+   Never remove .visible class. Prevents glitching/flicker. */
+var pages = ["home", "about", "col", "brands", "show", "proj", "contact", "wood"];
+function navTo(pg) {
+  pages.forEach(function(p) {
+    var el = document.getElementById("pg-" + p);
+    if (el) el.style.display = "none";
+  });
+  var target = document.getElementById("pg-" + pg);
+  if (!target) return false;
+  target.style.display = "block";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  /* Nav state */
+  if (pg === "home") {
+    nav.classList.remove("solid");
+    nav.classList.add("dark-mode");
+  } else {
+    nav.classList.add("solid");
+    nav.classList.remove("dark-mode");
+  }
+  /* Hero image animation reset */
+  if (pg === "home") {
+    var hi = document.getElementById("hero-img");
+    if (hi) { hi.classList.remove("loaded"); setTimeout(function() { hi.classList.add("loaded"); }, 50); }
+  }
+  setTimeout(function() { triggerReveal(); bindCursorHovers(); }, 100);
+  return false;
+}
+
+/* ── SCROLL REVEAL ──
+   ANTI-GLITCH: Once an element gets .visible, it NEVER loses it.
+   We use a single persistent observer. */
+var revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+function triggerReveal() {
+  /* Only observe elements that are NOT yet visible */
+  document.querySelectorAll("[data-reveal]:not(.visible)").forEach(function(el) {
+    revealObs.observe(el);
+  });
+}
+
+/* ── HERO IMAGE PARALLAX ── */
+document.addEventListener("mousemove", function(e) {
+  var pg = document.getElementById("pg-home");
+  if (!pg || pg.style.display === "none") return;
+  var x = (e.clientX / window.innerWidth - 0.5) * 12;
+  var y = (e.clientY / window.innerHeight - 0.5) * 6;
+  var hi = document.getElementById("hero-img");
+  if (hi) hi.style.transform = "scale(1.06) translate(" + (x * 0.015) + "px, " + (y * 0.01) + "px)";
+});
+
+/* ── INIT ── */
+window.addEventListener("DOMContentLoaded", function() {
+  /* Start hero image zoom */
+  var hi = document.getElementById("hero-img");
+  if (hi) setTimeout(function() { hi.classList.add("loaded"); }, 100);
+  /* Initial reveal */
+  triggerReveal();
+  setTimeout(triggerReveal, 400);
+  /* Cursor hovers */
+  bindCursorHovers();
+});
+window.addEventListener("scroll", function() { triggerReveal(); }, { passive: true });
+
+/* Wood product modals */
+function openWood(id) {
+  document.getElementById("wood-modal-bg").style.display = "block";
+  document.getElementById(id).style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeWood() {
+  document.getElementById("wood-modal-bg").style.display = "none";
+  document.querySelectorAll("[id^='wd-']").forEach(function(el){ el.style.display = "none"; });
+  document.body.style.overflow = "";
+}
+
+
+/* ── Why KENYOS animated section ── */
+(function(){
+  var whyObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var el = entry.target;
+      // Overline
+      if(el.classList.contains("why-overline")||el.classList.contains("why-word")||el.classList.contains("why-panel")){
+        el.classList.add("wvis");
+        whyObs.unobserve(el);
+      }
+    });
+  },{threshold:0.18});
+
+  function initWhy(){
+    document.querySelectorAll(".why-overline,.why-word,.why-panel").forEach(function(el){
+      if(!el.classList.contains("wvis")) whyObs.observe(el);
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", initWhy);
+  window.addEventListener("scroll", initWhy, {passive:true});
+})();
+
+</script>
+</body>
+</html>
